@@ -25,6 +25,11 @@ public class ExchangeController {
         return exchangeRequestRepository.findByReceiverId(receiverId);
     }
     
+    @GetMapping("/requester/{requesterId}")
+    public List<ExchangeRequest> getRequestsForRequester(@PathVariable Long requesterId) {
+        return exchangeRequestRepository.findByRequesterId(requesterId);
+    }
+    
     @PutMapping("/{id}/status")
     public ExchangeRequest updateStatus(@PathVariable Long id, @RequestParam String status) {
         ExchangeRequest req = exchangeRequestRepository.findById(id).orElseThrow();

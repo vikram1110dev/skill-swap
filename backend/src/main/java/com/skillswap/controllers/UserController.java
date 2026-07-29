@@ -24,6 +24,11 @@ public class UserController {
         return userRepository.findById(id).orElse(null);
     }
     
+    @PostMapping("/login")
+    public User loginUser(@RequestBody User loginReq) {
+        return userRepository.findByName(loginReq.getName()).orElse(null);
+    }
+    
     @GetMapping("/location/{location}")
     public List<User> getUsersByLocation(@PathVariable String location) {
         return userRepository.findByLocation(location);

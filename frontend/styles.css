@@ -218,3 +218,61 @@ input:focus {
     background: var(--primary);
     color: white;
 }
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 450px;
+}
+
+.stars {
+    font-size: 2.5rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.star.active, .star.hover {
+    color: #fbbf24;
+}
+
+#review-comment {
+    width: 100%;
+    height: 100px;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1rem;
+    color: var(--text-main);
+    resize: none;
+    font-family: inherit;
+}
+#review-comment:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.rating-badge {
+    background: rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+    font-weight: bold;
+}
