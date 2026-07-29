@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSwap | Local Barter Economy</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+    
+    <header class="glass-panel">
+        <div class="logo">SkillSwap</div>
+        <nav>
+            <a href="#" class="active">Dashboard</a>
+            <a href="#">Matches</a>
+            <a href="#">My Exchanges</a>
+        </nav>
+        <div class="user-profile">
+            <span id="current-user-name">Guest</span>
+        </div>
+    </header>
+
+    <main>
+        <section id="onboarding" class="glass-panel animate-slide-up">
+            <h2>Join the Barter Economy</h2>
+            <p>Exchange your skills with people in your area. No money, just pure community.</p>
+            <form id="profile-form">
+                <div class="input-group">
+                    <label>Name</label>
+                    <input type="text" id="name" required placeholder="John Doe">
+                </div>
+                <div class="input-group">
+                    <label>Location (Area)</label>
+                    <input type="text" id="location" required placeholder="Downtown">
+                </div>
+                <div class="input-group">
+                    <label>I can teach...</label>
+                    <input type="text" id="teach" required placeholder="Guitar, Cooking...">
+                </div>
+                <div class="input-group">
+                    <label>I want to learn...</label>
+                    <input type="text" id="learn" required placeholder="Spanish, Coding...">
+                </div>
+                <button type="submit" class="btn-primary">Create Profile</button>
+            </form>
+        </section>
+
+        <section id="dashboard" class="hidden glass-panel animate-slide-up">
+            <h2>Local Matches for You</h2>
+            <div id="matches-container" class="grid-container">
+                <!-- Matches will be populated here -->
+            </div>
+        </section>
+        
+        <section id="exchanges" class="hidden glass-panel animate-slide-up">
+            <h2>Your Exchange Requests</h2>
+            <div id="requests-container" class="list-container">
+                <!-- Requests will be populated here -->
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
