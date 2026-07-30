@@ -1,8 +1,8 @@
 package com.skillswap.models;
 
-import com.skillswap.models.enums.ExchangeStatus;
-import com.skillswap.models.enums.MeetingMethod;
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "exchange_requests")
 public class ExchangeRequest {
@@ -11,53 +11,52 @@ public class ExchangeRequest {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "requester_id", nullable = false)
-    private User requester;
+    @JoinColumn(name = "sender_id", nullable = false)
+    private User sender;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "receiver_id", nullable = false)
     private User receiver;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "requested_skill_id")
-    private Skill requestedSkill;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "offered_skill_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "offered_skill_id", nullable = false)
     private Skill offeredSkill;
 
-    private Integer durationWeeks;
-    private Integer weeklyHours;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "requested_skill_id", nullable = false)
+    private Skill requestedSkill;
 
-    @Enumerated(EnumType.STRING)
-    private MeetingMethod meetingMethod;
-    
-    @Column(length = 1000)
+    @Column(columnDefinition = "TEXT")
     private String message;
 
-    @Enumerated(EnumType.STRING)
-    private ExchangeStatus status = ExchangeStatus.PENDING;
+    @Column(nullable = false)
+    private String status = "PENDING"; // PENDING, ACCEPTED, DECLINED, COMPLETED
+
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public ExchangeRequest() {}
 
-    public Long getId() { return this.id; }
+    public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-    public User getRequester() { return this.requester; }
-    public void setRequester(User requester) { this.requester = requester; }
-    public User getReceiver() { return this.receiver; }
+    
+    public User getSender() { return sender; }
+    public void setSender(User sender) { this.sender = sender; }
+    
+    public User getReceiver() { return receiver; }
     public void setReceiver(User receiver) { this.receiver = receiver; }
-    public Skill getRequestedSkill() { return this.requestedSkill; }
-    public void setRequestedSkill(Skill requestedSkill) { this.requestedSkill = requestedSkill; }
-    public Skill getOfferedSkill() { return this.offeredSkill; }
+    
+    public Skill getOfferedSkill() { return offeredSkill; }
     public void setOfferedSkill(Skill offeredSkill) { this.offeredSkill = offeredSkill; }
-    public Integer getDurationWeeks() { return this.durationWeeks; }
-    public void setDurationWeeks(Integer durationWeeks) { this.durationWeeks = durationWeeks; }
-    public Integer getWeeklyHours() { return this.weeklyHours; }
-    public void setWeeklyHours(Integer weeklyHours) { this.weeklyHours = weeklyHours; }
-    public MeetingMethod getMeetingMethod() { return this.meetingMethod; }
-    public void setMeetingMethod(MeetingMethod meetingMethod) { this.meetingMethod = meetingMethod; }
-    public String getMessage() { return this.message; }
+    
+    public Skill getRequestedSkill() { return requestedSkill; }
+    public void setRequestedSkill(Skill requestedSkill) { this.requestedSkill = requestedSkill; }
+    
+    public String getMessage() { return message; }
     public void setMessage(String message) { this.message = message; }
-    public ExchangeStatus getStatus() { return this.status; }
-    public void setStatus(ExchangeStatus status) { this.status = status; }
+    
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+    
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }

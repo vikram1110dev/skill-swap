@@ -24,3 +24,25 @@ export interface UserProfile {
   completedExchanges: number;
   skills: UserSkill[];
 }
+
+export interface ExchangeRequest {
+  id: number;
+  senderId: number;
+  senderName: string;
+  senderEmail?: string;
+  receiverId: number;
+  receiverName: string;
+  receiverEmail?: string;
+  offeredSkill: Skill;
+  requestedSkill: Skill;
+  message: string;
+  status: 'PENDING' | 'ACCEPTED' | 'DECLINED' | 'COMPLETED';
+  createdAt: string;
+}
+
+export interface Match {
+  user: UserProfile;
+  matchingOfferedSkill?: Skill;
+  matchingRequestedSkill?: Skill;
+  isTwoWayMatch: boolean;
+}
