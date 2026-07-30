@@ -32,8 +32,7 @@ export default function Navbar() {
               SkillSwap
             </Link>
           </div>
-          
-          <div className="hidden md:flex items-center space-x-2">
+          <div className="flex items-center space-x-1 sm:space-x-2 overflow-x-auto">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = location.pathname === item.path;
