@@ -1,120 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkillSwap | Local Barter Economy</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="background-blobs">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
-    </div>
-    
-    <header class="glass-panel">
-        <div class="logo">SkillSwap</div>
-        <nav>
-            <a href="#" id="nav-dashboard" class="active">Dashboard</a>
-            <a href="#" id="nav-exchanges">My Exchanges</a>
-        </nav>
-        <div class="user-profile">
-            <span id="current-user-name">Guest</span>
-        </div>
-    </header>
-
-    <main>
-        <section id="onboarding" class="glass-panel animate-slide-up">
-            <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                <h2>Join the Barter Economy</h2>
-                <a href="#" id="show-login" style="color: var(--primary);">Already have an account? Login</a>
-            </div>
-            <p>Exchange your skills with people in your area. No money, just pure community.</p>
-            <form id="profile-form">
-                <div class="input-group">
-                    <label>Name</label>
-                    <input type="text" id="name" required placeholder="John Doe">
-                </div>
-                <div class="input-group">
-                    <label>Location (Area)</label>
-                    <input type="text" id="location" required placeholder="Downtown">
-                </div>
-                <div class="input-group">
-                    <label>I can teach...</label>
-                    <input type="text" id="teach" required placeholder="Guitar, Cooking...">
-                </div>
-                <div class="input-group">
-                    <label>I want to learn...</label>
-                    <input type="text" id="learn" required placeholder="Spanish, Coding...">
-                </div>
-                <button type="submit" class="btn-primary">Create Profile</button>
-            </form>
-        </section>
-
-        <section id="login-section" class="hidden glass-panel animate-slide-up">
-            <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                <h2>Welcome Back</h2>
-                <a href="#" id="show-register" style="color: var(--primary);">Need an account? Register</a>
-            </div>
-            <p>Enter your name to continue bartering.</p>
-            <form id="login-form">
-                <div class="input-group">
-                    <label>Name</label>
-                    <input type="text" id="login-name" required placeholder="John Doe">
-                </div>
-                <button type="submit" class="btn-primary">Login</button>
-            </form>
-        </section>
-
-        <section id="dashboard" class="hidden glass-panel animate-slide-up">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1rem;">
-                <h2 style="margin-bottom: 0;">Local Matches</h2>
-                <input type="text" id="search-skill" placeholder="Search a skill to learn..." style="width: 250px;">
-            </div>
-            <div id="matches-container" class="grid-container">
-                <!-- Matches will be populated here -->
-            </div>
-        </section>
-        
-        <section id="exchanges" class="hidden glass-panel animate-slide-up">
-            <h2>Your Exchange Requests</h2>
-            <h3 style="margin-top: 1rem; color: var(--text-muted); font-weight: 400;">Incoming Requests</h3>
-            <div id="incoming-requests-container" class="grid-container" style="margin-bottom: 2rem;">
-                <!-- Incoming Requests -->
-            </div>
-            
-            <h3 style="margin-top: 1rem; color: var(--text-muted); font-weight: 400;">Outgoing Requests</h3>
-            <div id="outgoing-requests-container" class="grid-container">
-                <!-- Outgoing Requests -->
-            </div>
-        </section>
-        </section>
-    </main>
-
-    <!-- Review Modal -->
-    <div id="review-modal" class="hidden modal-overlay">
-        <div class="glass-panel modal-content animate-slide-up">
-            <h2>Rate your Exchange</h2>
-            <p>How was your experience with <span id="reviewee-name" style="font-weight: bold; color: var(--primary);"></span>?</p>
-            <div class="stars" id="star-rating">
-                <span class="star" data-value="1">★</span>
-                <span class="star" data-value="2">★</span>
-                <span class="star" data-value="3">★</span>
-                <span class="star" data-value="4">★</span>
-                <span class="star" data-value="5">★</span>
-            </div>
-            <input type="hidden" id="reviewee-id">
-            <input type="hidden" id="rating-value" value="0">
-            <textarea id="review-comment" placeholder="Leave a comment..."></textarea>
-            <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                <button id="submit-review" class="btn-primary">Submit Review</button>
-                <button id="cancel-review" class="btn-small" style="margin-top: 0;">Cancel</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="app.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>frontend</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

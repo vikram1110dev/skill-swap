@@ -1,31 +1,61 @@
 package com.skillswap.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.skillswap.models.enums.Role;
+import jakarta.persistence.*;
+import lombok.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    private String name;
-    private String location;
-    private String skillToTeach;
-    private String skillToLearn;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    public String getLocation() { return location; }
-    public void setLocation(String location) { this.location = location; }
-    public String getSkillToTeach() { return skillToTeach; }
-    public void setSkillToTeach(String skillToTeach) { this.skillToTeach = skillToTeach; }
-    public String getSkillToLearn() { return skillToLearn; }
-    public void setSkillToLearn(String skillToLearn) { this.skillToLearn = skillToLearn; }
+    private String profilePhoto;
+    private String fullName;
+    
+    @Column(unique = true, nullable = false)
+    private String username;
+    
+    @Column(unique = true, nullable = false)
+    private String email;
+    
+    @Column(nullable = false)
+    private String password;
+    
+    private String bio;
+    private String country;
+    private String city;
+    
+    @ElementCollection
+    private Set<String> languages = new HashSet<>();
+    
+    private String experienceLevel;
+    private String availability;
+    private String timeZone;
+    
+    @Builder.Default
+    private Double rating = 0.0;
+    
+    @Builder.Default
+    private Integer completedExchanges = 0;
+    
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles = new HashSet<>();
+    
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UserSkill> skills = new HashSet<>();
+
+    @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL)
+    private Set<Review> reviewsGiven = new HashSet<>();
+    
+    @OneToMany(mappedBy = "reviewee", cascade = CascadeType.ALL)
+    private Set<Review> reviewsReceived = new HashSet<>();
 }

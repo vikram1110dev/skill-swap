@@ -2,11 +2,13 @@ package com.skillswap.repositories;
 
 import com.skillswap.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List;
-
+import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
+@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    List<User> findByLocation(String location);
-    Optional<User> findByName(String name);
+    Optional<User> findByEmail(String email);
+    Optional<User> findByUsername(String username);
+    Boolean existsByUsername(String username);
+    Boolean existsByEmail(String email);
 }
