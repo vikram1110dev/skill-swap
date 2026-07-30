@@ -52,13 +52,12 @@ public class AuthService {
             throw new RuntimeException("Email is already in use!");
         }
 
-        User user = User.builder()
-                .fullName(registerDto.getFullName())
-                .username(registerDto.getUsername())
-                .email(registerDto.getEmail())
-                .password(passwordEncoder.encode(registerDto.getPassword()))
-                .roles(Collections.singleton(Role.ROLE_STUDENT))
-                .build();
+        User user = new User();
+        user.setFullName(registerDto.getFullName());
+        user.setUsername(registerDto.getUsername());
+        user.setEmail(registerDto.getEmail());
+        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        user.setRoles(Collections.singleton(Role.ROLE_STUDENT));
 
         userRepository.save(user);
 

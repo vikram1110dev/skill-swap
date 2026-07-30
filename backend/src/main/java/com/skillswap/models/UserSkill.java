@@ -3,14 +3,8 @@ package com.skillswap.models;
 import com.skillswap.models.enums.SkillType;
 import com.skillswap.models.enums.ProficiencyLevel;
 import jakarta.persistence.*;
-import lombok.*;
-
 @Entity
 @Table(name = "user_skills")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class UserSkill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,4 +24,17 @@ public class UserSkill {
 
     @Enumerated(EnumType.STRING)
     private ProficiencyLevel proficiencyLevel;
+
+    public UserSkill() {}
+
+    public Long getId() { return this.id; }
+    public void setId(Long id) { this.id = id; }
+    public User getUser() { return this.user; }
+    public void setUser(User user) { this.user = user; }
+    public Skill getSkill() { return this.skill; }
+    public void setSkill(Skill skill) { this.skill = skill; }
+    public SkillType getSkillType() { return this.skillType; }
+    public void setSkillType(SkillType skillType) { this.skillType = skillType; }
+    public ProficiencyLevel getProficiencyLevel() { return this.proficiencyLevel; }
+    public void setProficiencyLevel(ProficiencyLevel proficiencyLevel) { this.proficiencyLevel = proficiencyLevel; }
 }

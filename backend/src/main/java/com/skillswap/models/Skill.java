@@ -1,14 +1,8 @@
 package com.skillswap.models;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 @Entity
 @Table(name = "skills")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,4 +13,13 @@ public class Skill {
 
     @Column(nullable = false)
     private String category;
+
+    public Skill() {}
+
+    public Long getId() { return this.id; }
+    public void setId(Long id) { this.id = id; }
+    public String getName() { return this.name; }
+    public void setName(String name) { this.name = name; }
+    public String getCategory() { return this.category; }
+    public void setCategory(String category) { this.category = category; }
 }

@@ -2,15 +2,10 @@ package com.skillswap.models;
 
 import com.skillswap.models.enums.NotificationType;
 import jakarta.persistence.*;
-import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "notifications")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,9 +22,22 @@ public class Notification {
     @Column(nullable = false)
     private String message;
 
-    @Builder.Default
     private LocalDateTime timestamp = LocalDateTime.now();
 
-    @Builder.Default
     private Boolean isRead = false;
+
+    public Notification() {}
+
+    public Long getId() { return this.id; }
+    public void setId(Long id) { this.id = id; }
+    public User getUser() { return this.user; }
+    public void setUser(User user) { this.user = user; }
+    public NotificationType getType() { return this.type; }
+    public void setType(NotificationType type) { this.type = type; }
+    public String getMessage() { return this.message; }
+    public void setMessage(String message) { this.message = message; }
+    public LocalDateTime getTimestamp() { return this.timestamp; }
+    public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
+    public Boolean getIsRead() { return this.isRead; }
+    public void setIsRead(Boolean isRead) { this.isRead = isRead; }
 }
