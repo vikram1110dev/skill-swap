@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { UserProfile } from '../types';
+import type { UserProfile } from '../types';
 import api from '../services/api';
 import { Save, Plus } from 'lucide-react';
 import SkillSelectModal from '../components/SkillSelectModal';

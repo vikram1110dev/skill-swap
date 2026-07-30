@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
-import { Skill } from '../types';
+import type { Skill } from '../types';
 import { X } from 'lucide-react';
 
 interface Props {

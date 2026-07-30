@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../store/AuthContext';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
-import { UserProfile } from '../types';
+import type { UserProfile } from '../types';
 import { User, BookOpen, GraduationCap } from 'lucide-react';
 
 export default function Dashboard() {
