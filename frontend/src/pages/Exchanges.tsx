@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
 import type { ExchangeRequest } from '../types';
-import { Inbox, CheckCircle, XCircle, Clock, Mail } from 'lucide-react';
+import { Inbox, CheckCircle, XCircle, Clock, Mail, Send } from 'lucide-react';
 import { useAuth } from '../store/AuthContext';
 
 export default function Exchanges() {
   const { user } = useAuth();
   const [requests, setRequests] = useState<ExchangeRequest[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<'received' | 'sent'>('received');
 
   useEffect(() => {
     fetchRequests();
@@ -37,15 +38,42 @@ export default function Exchanges() {
     return <div className="flex justify-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-600"></div></div>;
   }
 
+  const incomingRequests = requests.filter(req => req.receiverId === user?.id);
+  const outgoingRequests = requests.filter(req => req.senderId === user?.id);
+  const displayRequests = activeTab === 'received' ? incomingRequests : outgoingRequests;
+
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Inbox & Requests</h1>
-        <p className="text-gray-500 mb-2">Manage your incoming and outgoing skill exchange proposals.</p>
+        <p className="text-gray-500 mb-6">Manage your incoming and outgoing skill exchange proposals.</p>
+        
+        <div className="flex space-x-2 border-b border-gray-100 pb-px">
+          <button
+            onClick={() => setActiveTab('received')}
+            className={`px-4 py-2 font-medium text-sm rounded-t-lg border-b-2 transition-colors ${
+              activeTab === 'received' 
+                ? 'border-indigo-600 text-indigo-600' 
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200'
+            }`}
+          >
+            Received ({incomingRequests.length})
+          </button>
+          <button
+            onClick={() => setActiveTab('sent')}
+            className={`px-4 py-2 font-medium text-sm rounded-t-lg border-b-2 transition-colors ${
+              activeTab === 'sent' 
+                ? 'border-indigo-600 text-indigo-600' 
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200'
+            }`}
+          >
+            Sent ({outgoingRequests.length})
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-6">
-        {requests.map((req) => {
+        {displayRequests.map((req) => {
           const isIncoming = req.receiverId === user?.id;
           const partnerName = isIncoming ? req.senderName : req.receiverName;
           const partnerEmail = isIncoming ? req.senderEmail : req.receiverEmail;
@@ -55,7 +83,7 @@ export default function Exchanges() {
               <div className="p-6 border-b border-gray-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="flex items-center space-x-3">
                   <div className={`p-2.5 rounded-full ${isIncoming ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-100 text-gray-600'}`}>
-                    <Inbox className="w-5 h-5" />
+                    {isIncoming ? <Inbox className="w-5 h-5" /> : <Send className="w-5 h-5" />}
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900">
@@ -133,13 +161,13 @@ export default function Exchanges() {
           );
         })}
 
-        {requests.length === 0 && (
+        {displayRequests.length === 0 && (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
             <div className="mx-auto w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-4">
               <Clock className="w-8 h-8 text-gray-300" />
             </div>
-            <h3 className="text-lg font-bold text-gray-900 mb-1">No requests yet</h3>
-            <p className="text-gray-500">When you propose an exchange or someone proposes one to you, it will appear here.</p>
+            <h3 className="text-lg font-bold text-gray-900 mb-1">No {activeTab} requests yet</h3>
+            <p className="text-gray-500">When you {activeTab === 'received' ? 'receive' : 'send'} a skill exchange proposal, it will appear here.</p>
           </div>
         )}
       </div>
