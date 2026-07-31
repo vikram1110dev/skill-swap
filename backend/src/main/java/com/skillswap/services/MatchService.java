@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
+public class MatchService {
 
     private final UserRepository userRepository;
     private final UserService userService; 
