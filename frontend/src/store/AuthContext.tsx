@@ -1,28 +1,44 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import api from '../services/api';
+import type { UserProfile } from '../types';
 
 interface AuthContextType {
   token: string | null;
-  username: string | null;
-  email: string | null;
+  user: UserProfile | null;
   login: (token: string, username: string, email: string) => void;
   logout: () => void;
   isAuthenticated: boolean;
+  isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
-  const [username, setUsername] = useState<string | null>(localStorage.getItem('username'));
-  const [email, setEmail] = useState<string | null>(localStorage.getItem('email'));
+  const [user, setUser] = useState<UserProfile | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (token) {
+        try {
+          const response = await api.get('/users/me');
+          setUser(response.data);
+        } catch (error) {
+          console.error("Failed to fetch user", error);
+          logout();
+        }
+      }
+      setIsLoading(false);
+    };
+    fetchUser();
+  }, [token]);
 
   const login = (newToken: string, newUsername: string, newEmail: string) => {
     localStorage.setItem('token', newToken);
     localStorage.setItem('username', newUsername);
     localStorage.setItem('email', newEmail);
     setToken(newToken);
-    setUsername(newUsername);
-    setEmail(newEmail);
   };
 
   const logout = () => {
@@ -30,12 +46,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('username');
     localStorage.removeItem('email');
     setToken(null);
-    setUsername(null);
-    setEmail(null);
+    setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ token, username, email, login, logout, isAuthenticated: !!token }}>
+    <AuthContext.Provider value={{ token, user, login, logout, isAuthenticated: !!token, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
