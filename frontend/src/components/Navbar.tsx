@@ -1,12 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../store/AuthContext';
 import { LogOut, User, LayoutDashboard, Search, Sparkles, Inbox } from 'lucide-react';
+import api from '../services/api';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [pendingCount, setPendingCount] = useState(0);
+
+  useEffect(() => {
+    if (!user) return;
+    const fetchPending = async () => {
+      try {
+        const response = await api.get('/exchanges');
+        const pending = response.data.filter((r: any) => r.receiverId === user.id && r.status === 'PENDING');
+        setPendingCount(pending.length);
+      } catch (err) {
+        // ignore
+      }
+    };
+    
+    fetchPending();
+    const interval = setInterval(fetchPending, 15000);
+    return () => clearInterval(interval);
+  }, [user]);
 
   const handleLogout = () => {
     logout();
@@ -19,7 +38,7 @@ export default function Navbar() {
     { name: 'Dashboard', path: '/', icon: LayoutDashboard },
     { name: 'Discover', path: '/discover', icon: Search },
     { name: 'Matches', path: '/matches', icon: Sparkles },
-    { name: 'Exchanges', path: '/exchanges', icon: Inbox },
+    { name: 'Inbox', path: '/exchanges', icon: Inbox, hasNotification: pendingCount > 0 },
     { name: 'Profile', path: '/profile', icon: User },
   ];
 
@@ -40,13 +59,21 @@ export default function Navbar() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center px-4 py-2 text-sm font-medium rounded-xl transition-all ${
+                  className={`relative flex items-center px-4 py-2 text-sm font-medium rounded-xl transition-all ${
                     isActive 
                       ? 'bg-indigo-50 text-indigo-700' 
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 mr-2 ${isActive ? 'text-indigo-600' : 'text-gray-400'}`} />
+                  <div className="relative">
+                    <Icon className={`w-4 h-4 mr-2 ${isActive ? 'text-indigo-600' : 'text-gray-400'}`} />
+                    {item.hasNotification && (
+                      <span className="absolute -top-1 -right-0.5 flex h-2.5 w-2.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
+                      </span>
+                    )}
+                  </div>
                   {item.name}
                 </Link>
               );

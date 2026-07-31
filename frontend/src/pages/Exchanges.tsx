@@ -40,7 +40,7 @@ export default function Exchanges() {
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Exchange Requests</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Inbox & Requests</h1>
         <p className="text-gray-500 mb-2">Manage your incoming and outgoing skill exchange proposals.</p>
       </div>
 
