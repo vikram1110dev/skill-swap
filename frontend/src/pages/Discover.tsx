@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
-import type { UserProfile } from '../types';
+import type { UserProfile, Match } from '../types';
 import { Search, User as UserIcon } from 'lucide-react';
+import ExchangeModal from '../components/ExchangeModal';
 
 export default function Discover() {
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -91,6 +93,15 @@ export default function Discover() {
                 </div>
               </div>
             </div>
+
+            <div className="p-6 pt-0 mt-auto">
+              <button 
+                onClick={() => setSelectedUser(u)}
+                className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl transition-colors shadow-sm shadow-indigo-200"
+              >
+                Propose Exchange
+              </button>
+            </div>
           </div>
         ))}
         
@@ -104,6 +115,18 @@ export default function Discover() {
           </div>
         )}
       </div>
+
+      {selectedUser && (
+        <ExchangeModal 
+          match={{
+            user: selectedUser,
+            matchingOfferedSkill: null,
+            matchingRequestedSkill: null,
+            isTwoWayMatch: false
+          }} 
+          onClose={() => setSelectedUser(null)} 
+        />
+      )}
     </div>
   );
 }
