@@ -28,17 +28,17 @@ public class MatchService {
         List<MatchDto> matches = new ArrayList<>();
 
         List<UserSkill> currentUserRequested = currentUser.getSkills().stream()
-                .filter(us -> us.getSkillType().equals("REQUESTED")).collect(Collectors.toList());
+                .filter(us -> us.getSkillType().name().equals("REQUESTED")).collect(Collectors.toList());
         List<UserSkill> currentUserOffered = currentUser.getSkills().stream()
-                .filter(us -> us.getSkillType().equals("OFFERED")).collect(Collectors.toList());
+                .filter(us -> us.getSkillType().name().equals("OFFERED")).collect(Collectors.toList());
 
         for (User otherUser : allUsers) {
             if (otherUser.getId().equals(currentUser.getId())) continue;
 
             List<UserSkill> otherUserOffered = otherUser.getSkills().stream()
-                    .filter(us -> us.getSkillType().equals("OFFERED")).collect(Collectors.toList());
+                    .filter(us -> us.getSkillType().name().equals("OFFERED")).collect(Collectors.toList());
             List<UserSkill> otherUserRequested = otherUser.getSkills().stream()
-                    .filter(us -> us.getSkillType().equals("REQUESTED")).collect(Collectors.toList());
+                    .filter(us -> us.getSkillType().name().equals("REQUESTED")).collect(Collectors.toList());
 
             // Check if other user offers something we want
             UserSkill matchingOffered = null;
