@@ -12,23 +12,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import com.skillswap.repositories.UserRepository;
+
 @RestController
 @RequestMapping("/api")
 public class MatchController {
 
     private final MatchService matchService;
+    private final UserRepository userRepository;
 
-    public MatchController(MatchService matchService) {
+    public MatchController(MatchService matchService, UserRepository userRepository) {
         this.matchService = matchService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/matches")
-    public ResponseEntity<List<MatchDto>> getMatches(@AuthenticationPrincipal User user) {
+    public ResponseEntity<List<MatchDto>> getMatches(@AuthenticationPrincipal UserDetails userDetails) {
+        User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
         return ResponseEntity.ok(matchService.findMatchesForUser(user));
     }
 
     @GetMapping("/discover")
-    public ResponseEntity<List<UserProfileDto>> discoverUsers(@AuthenticationPrincipal User user) {
+    public ResponseEntity<List<UserProfileDto>> discoverUsers(@AuthenticationPrincipal UserDetails userDetails) {
+        User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
         return ResponseEntity.ok(matchService.discoverUsers(user));
     }
 }
