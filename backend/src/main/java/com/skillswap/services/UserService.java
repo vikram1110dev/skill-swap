@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
-public class UserService {
+@Transactional
 
     @Autowired
     private UserRepository userRepository;
