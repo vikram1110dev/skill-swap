@@ -23,27 +23,32 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
 }
 
+import BackToTopButton from './components/BackToTopButton';
+
 function App() {
   return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      
-      <Route 
-        path="/" 
-        element={
-          <ProtectedRoute>
-            <Layout />
-          </ProtectedRoute>
-        }
-      >
-        <Route index element={<Dashboard />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="discover" element={<Discover />} />
-        <Route path="matches" element={<Matches />} />
-        <Route path="exchanges" element={<Exchanges />} />
-      </Route>
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        
+        <Route 
+          path="/" 
+          element={
+            <ProtectedRoute>
+              <Layout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Dashboard />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="discover" element={<Discover />} />
+          <Route path="matches" element={<Matches />} />
+          <Route path="exchanges" element={<Exchanges />} />
+        </Route>
+      </Routes>
+      <BackToTopButton />
+    </>
   );
 }
 
